@@ -2,6 +2,9 @@
 
 **Simple Emacs minor mode to capture blog posts into a single Markdown file.**
 
+_No affiliation with [lmno.lol][] besides thinking it's cool._
+
+
 ## Features
 
 - Prompts for title and makes your timestamp automatically
@@ -40,3 +43,6 @@ Bug reports and pull requests welcome on [GitHub](https://github.com/yourusernam
 ## License
 
 MIT License
+
+
+[lmno.lol]: https://lmno.lol
