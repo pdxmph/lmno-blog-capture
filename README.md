@@ -4,7 +4,6 @@
 
 _No affiliation with [lmno.lol][] besides thinking it's cool._
 
-
 ## Features
 
 - Prompts for title and makes your timestamp automatically

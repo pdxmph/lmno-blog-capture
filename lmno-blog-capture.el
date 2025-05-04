@@ -1,7 +1,7 @@
 ;;; lmno-blog-capture.el --- Simple blog capture minor mode  -*- lexical-binding: t; -*-
 
 ;; Author: Mike
-;; Version: 0.1
+;; Version: 0.2
 ;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: convenience, tools, blog
 ;; URL: https://github.com/pdxmph/lmno-blog-capture
@@ -9,6 +9,9 @@
 ;;; Commentary:
 ;; A tiny minor mode and capture function to write quick blog posts
 ;; into a single Markdown file. Provides customizable destination file.
+
+;;; Configuration:
+;; (setq lmno-blog-capture-destination "~/bigbox/lmno.md")
 
 ;;; Code:
 
