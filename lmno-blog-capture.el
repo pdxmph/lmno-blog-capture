@@ -65,10 +65,13 @@
   (message "Blog capture aborted."))
 
 (defun lmno--close-capture-window ()
-  "Close the capture buffer and its window."
+  "Close the capture buffer and its window if more than one real window remains;
+otherwise just kill the buffer."
   (let ((buf (current-buffer)))
-    (delete-window)
+    (when (> (count-windows) 1)
+      (delete-window))
     (kill-buffer buf)))
+
 
 ;; Keybinding
 ;; Add to your config:
