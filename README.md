@@ -9,8 +9,16 @@ _No affiliation with [lmno.lol][] besides thinking it's cool._
 - Prompts for title and makes your timestamp automatically
 - Drop into a small capture window
 - Append entries to your chosen Markdown file
-- Move posts between drafts and published files
+- **Draft support**: Maintain separate draft and published files, easily move posts between them
 - Minimal dependencies (built-in Emacs functions + markdown-mode)
+
+## How Drafts Work
+
+This package supports a two-file workflow:
+- **Published file**: Your main blog file where finished posts live
+- **Drafts file**: A separate file for work-in-progress posts
+
+You can capture new posts to either file, then move individual posts between them as needed. This lets you work on posts over time before publishing them to your main blog.
 
 ## Installation
 
@@ -36,9 +44,11 @@ _No affiliation with [lmno.lol][] besides thinking it's cool._
 - `C-c C-c` to save and close, or `C-c C-k` to abort
 
 ### Moving posts between drafts and published
-- Navigate to a heading in either your drafts or published file
+- Open either your drafts or published file in Emacs
+- Place your cursor anywhere within the post you want to move
 - `M-x lmno-move-heading-between-draft-and-published` or your keybinding (`C-c n m` by default)
-- The heading and its content will be moved to the other file
+- The entire post (heading and content) moves to the top of the other file
+- Works in both directions: draft→published or published→draft
 
 ## Customization
 
