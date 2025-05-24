@@ -80,6 +80,18 @@
   (lmno--close-capture-window)
   (message "Blog capture aborted."))
 
+(defun lmno--update-date-stamp (heading-text)
+  "Update date stamp in HEADING-TEXT to today's date.
+Returns the heading text with updated date stamp."
+  (if (string-match "^# \\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\) \\([A-Za-z]\\{3\\}\\)\\]" heading-text)
+      (let ((new-timestamp (format-time-string "%Y-%m-%d %a")))
+        (replace-regexp-in-string 
+         "^# \\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\) \\([A-Za-z]\\{3\\}\\)\\]"
+         (format "# [%s]" new-timestamp)
+         heading-text))
+    ;; If heading doesn't match expected format, return as-is
+    heading-text))
+
 (defun lmno--close-capture-window ()
   "Close the capture buffer and its window if more than one real window remains;
 otherwise just kill the buffer."
@@ -91,14 +103,15 @@ otherwise just kill the buffer."
 (defun lmno-move-heading-between-draft-and-published ()
   "Move current Markdown L1 heading between drafts and published files.
 If in drafts file, moves to published. If in published, moves to drafts.
+When moving from drafts to published, updates date stamp if draft is more than 1 day old.
 Always inserts at the beginning of the target file."
   (interactive)
   (let* ((current-file (buffer-file-name))
          (published-file (expand-file-name lmno-blog-capture-destination))
          (drafts-file (expand-file-name lmno-blog-capture-drafts-file))
+         (moving-to-published (string= (file-truename current-file) (file-truename drafts-file)))
          (target-file (cond
-                       ((string= (file-truename current-file) (file-truename drafts-file)) 
-                        published-file)
+                       (moving-to-published published-file)
                        ((string= (file-truename current-file) (file-truename published-file)) 
                         drafts-file)
                        (t (user-error "This file is not the drafts or published blog file")))))
@@ -118,6 +131,9 @@ Always inserts at the beginning of the target file."
         ;; Cut the heading and its content
         (let ((heading-text (buffer-substring-no-properties start (point))))
           (delete-region start (point))
+          ;; If moving to published, always update the date stamp to today
+          (when moving-to-published
+            (setq heading-text (lmno--update-date-stamp heading-text)))
           ;; Paste into target file at beginning
           (with-current-buffer (find-file-noselect target-file)
             (goto-char (point-min))
